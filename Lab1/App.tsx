@@ -126,12 +126,10 @@ export default function App(){
                       </TouchableOpacity>
                   </View>
                   {area!==null&&(
-                      <View style={styles.historySection}>
-                          <View style={styles.historyHeader}>
-                              <Text style={styles.resultTitle}>Результат:</Text>
-                              <Text style={styles.areaText}>Площадь:{area.toFixed(2)}</Text>
-                              <Text style={styles.shapeName}>{currentConfig.name}</Text>
-                          </View>
+                      <View style={styles.resultSection}>
+                          <Text style={styles.resultTitle}>Результат:</Text>
+                          <Text style={styles.areaText}>Площадь:{area.toFixed(2)}</Text>
+                          <Text style={styles.shapeName}>{currentConfig.name}</Text>
                       </View>
                   )}
                   {history.length>0&&(
