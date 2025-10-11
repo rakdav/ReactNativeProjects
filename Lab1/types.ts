@@ -14,3 +14,9 @@ export interface InputField {
     placeholder:string;
     label:string;
 }
+export interface CalculationHistory{
+    shape:string;
+    area:string;
+    calculation:string;
+    timestamp:string;
+}
