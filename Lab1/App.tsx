@@ -88,6 +88,69 @@ export default function App(){
           </View>
       )
   }
+  const currentConfig=shapeConfigs[shape];
+  return (
+      <KeyboardAvoidingView style={styles.container}
+      behavior={Platform.OS === 'ios'?'padding':'height'}>
+          <ScrollView style={styles.scrollView}
+          showsVerticalScrollIndicator={false}>
+              <Text style={styles.title}>Калькулятор площади</Text>
+              <View style={styles.shapeSelector}>
+                  <Text style={styles.sectionTitle}>Выберите фигуру</Text>
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}
+                  style={styles.shapeScroll}>
+                      {(Object.keys(shapeConfigs) as ShapeType[]).map((shapeType)=>(
+                         <ShapeButton
+                             key={shapeType}
+                             shape={shapeConfigs[shapeType].name}
+                             isActive={shape==shapeType}
+                         onPress={()=>handleShapeChange(shapeType)}/>
+                      ))}
+                  </ScrollView>
+                  <View style={styles.formulaSection}>
+                      <Text style={styles.formulaLabel}>Формула</Text>
+                      <Text style={styles.formulaText}>{currentConfig.formula}</Text>
+                  </View>
+                  <View style={styles.inputSection}>
+                      <Text style={styles.sectionTitle}>Параметры</Text>
+                      {renderInputs()}
+                  </View>
+                  <View style={styles.buttonGroup}>
+                      <TouchableOpacity style={styles.calculateButton}
+                                        onPress={calculateArea}>
+                          <Text style={styles.calculateButtonText}>Рассчитать</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.clearButton}
+                                        onPress={clearInputs}>
+                          <Text style={styles.clearButtonText}>Очистить</Text>
+                      </TouchableOpacity>
+                  </View>
+                  {area!==null&&(
+                      <View style={styles.historySection}>
+                          <View style={styles.historyHeader}>
+                              <Text style={styles.resultTitle}>Результат:</Text>
+                              <Text style={styles.areaText}>Площадь:{area.toFixed(2)}</Text>
+                              <Text style={styles.shapeName}>{currentConfig.name}</Text>
+                          </View>
+                      </View>
+                  )}
+                  {history.length>0&&(
+                      <View style={styles.historySection}>
+                          <View style={styles.historyHeader}>
+                              <Text style={styles.sectionTitle}>История расчетов</Text>
+                              <TouchableOpacity onPress={clearHistory}>
+                                  <Text style={styles.clearHistoryText}>Очистить</Text>
+                              </TouchableOpacity>
+                          </View>
+                          {history.map((item,index)=>(
+                              <HistoryItem item={item} key={index}/>
+                          ))}
+                      </View>
+                  )}
+              </View>
+          </ScrollView>
+      </KeyboardAvoidingView>
+  )
 }
 
 const styles = StyleSheet.create({
