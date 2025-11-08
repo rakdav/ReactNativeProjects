@@ -6,6 +6,9 @@ export default function ListContainer(){
     const [asc,setAsc]=useState(false);
     const [filter,setFilter]=useState("");
     const [loading, setLoading] = useState(true);
+    const filteredData = data
+        .filter(item => item.title.startsWith(filter))
+        .sort((a, b) => asc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
     const url = "https://jsonplaceholder.typicode.com/posts"
     useEffect(() => {
         fetch(url)
@@ -15,7 +18,7 @@ export default function ListContainer(){
             .finally(() => setLoading(false));
     }, [])
     return(
-        <List data={data}
+        <List data={filteredData}
               asc={asc}
               onFilter={(text)=>{setFilter(text)}}
               onSort={()=>{setAsc(!asc)}}
